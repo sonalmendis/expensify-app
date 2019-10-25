@@ -1,0 +1,28 @@
+/*
+JEST
+To run jest watch in command line:
+yarn run jest -- --watch
+the two '--' before '--watch' indicates that before the hyphens are related to yarn and after is related to the actual script we're trying to run
+*/
+
+const add = (a, b) => a + b;
+const generateGreeting = (name = 'Anonymous') => `Hello ${name}!`;
+
+// The test function below takes two arguments, the first being a string describing the test and the second the function
+test('should add two number', () => {
+	const result = add(3, 4);
+	expect(result).toBe(7); // This is the same as the if statement below
+	// if (result !== 7) {
+	// 	throw new Error(`You added 3 and 4. The result was ${result}. Expect 7`);
+	// }
+});
+
+test('should be a name', () => {
+	const result = generateGreeting('Mike');
+	expect(result).toBe('Hello Mike!');
+});
+
+test('should generate a greeting with no name', () => {
+	const result = generateGreeting();
+	expect(result).toBe('Hello Anonymous!');
+});
