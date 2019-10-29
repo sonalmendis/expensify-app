@@ -5,7 +5,6 @@
 	"author": "Sonal Mendis",
 	"license": "MIT",
 	"scripts": {
-		"serve": "live-server public/",
 		"build:dev": "webpack",
 		"build:prod": "webpack -p --env production",
 		"dev-server": "webpack-dev-server",
@@ -19,12 +18,8 @@
 		"babel-loader": "^8.0.4",
 		"babel-plugin-transform-object-rest-spread": "^6.26.0",
 		"css-loader": "^2.0.1",
-		"enzyme": "^3.10.0",
 		"enzyme-adapter-react-16": "^1.15.1",
-		"enzyme-to-json": "^3.4.3",
 		"express": "^4.17.1",
-		"jest": "^24.9.0",
-		"live-server": "^1.2.1",
 		"mini-css-extract-plugin": "^0.8.0",
 		"moment": "^2.24.0",
 		"node-sass": "^4.11.0",
@@ -36,19 +31,22 @@
 		"react-modal": "^3.8.1",
 		"react-redux": "^7.1.1",
 		"react-router-dom": "^5.1.2",
-		"react-test-renderer": "^16.10.2",
 		"redux": "^4.0.4",
 		"sass-loader": "^7.1.0",
 		"style-loader": "^0.23.1",
 		"uuid": "^3.3.3",
 		"validator": "10.9.0",
 		"webpack": "^4.27.1",
-		"webpack-cli": "^3.1.2",
-		"webpack-dev-server": "^3.1.10"
+		"webpack-cli": "^3.1.2"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.2.2",
 		"@babel/plugin-proposal-class-properties": "^7.2.1",
-		"@babel/preset-env": "^7.2.0"
+		"@babel/preset-env": "^7.2.0",
+		"webpack-dev-server": "^3.1.10",
+		"react-test-renderer": "^16.10.2",
+		"enzyme": "^3.10.0",
+		"enzyme-to-json": "^3.4.3",
+		"jest": "^24.9.0"
 	}
 }
