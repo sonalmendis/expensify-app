@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should count multiple expenses and add up correct total 1`] = `
+<div>
+  <p>
+    You have 
+    3
+     expenses totalling 
+    $255.00
+  </p>
+</div>
+`;
+
+exports[`should count single expense and show total 1`] = `
+<div>
+  <p>
+    You have 
+    1
+     expenses totalling 
+    $5.00
+  </p>
+</div>
+`;
+
+exports[`should render expenses summary component correctly without any expenses 1`] = `
+<div>
+  <p>
+    No expenses to currently show
+  </p>
+</div>
+`;
