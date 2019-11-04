@@ -12,11 +12,12 @@ export const ExpensesSummary = props => {
 		);
 	} else {
 		const numberOfExpenses = props.expenses.length;
-		const expensesTotalAmount = props.expensesTotal;
+		const expensesTotalAmount = numeral(props.expensesTotal / 100).format('$0,0.00');
+		const expenseWordPlural = numberOfExpenses === 1 ? 'expense' : 'expenses';
 		return (
 			<div>
 				<p>
-					You have {numberOfExpenses} expenses totalling {numeral(expensesTotalAmount / 100).format('$0,0.00')}
+					You have {numberOfExpenses} {expenseWordPlural} totalling {expensesTotalAmount}
 				</p>
 			</div>
 		);

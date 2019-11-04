@@ -5,7 +5,9 @@ exports[`should count multiple expenses and add up correct total 1`] = `
   <p>
     You have 
     3
-     expenses totalling 
+     
+    expenses
+     totalling 
     $255.00
   </p>
 </div>
@@ -16,7 +18,9 @@ exports[`should count single expense and show total 1`] = `
   <p>
     You have 
     1
-     expenses totalling 
+     
+    expense
+     totalling 
     $5.00
   </p>
 </div>
