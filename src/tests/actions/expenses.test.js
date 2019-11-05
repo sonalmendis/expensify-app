@@ -6,9 +6,10 @@ import {
 	removeExpense,
 	editExpense,
 	setExpenses,
-	startSetExpenses
+	startSetExpenses,
+	startRemoveExpense
 } from '../../actions/expenses';
-import { testNameToKey } from 'jest-snapshot/build/utils';
+
 import expenses from '../fixtures/expenses';
 import database from '../../firebase/firebase';
 
@@ -26,10 +27,11 @@ beforeEach(done => {
 });
 
 test('should setup remove expense action object', () => {
-	const action = removeExpense({ id: '123abcd' });
+	const id = '123abcd';
+	const action = removeExpense({ id });
 	expect(action).toEqual({
 		type: 'REMOVE_EXPENSE',
-		id: '123abcd'
+		id
 	});
 	//toEqual is used for objects
 });
@@ -114,14 +116,14 @@ test('should add expense with DEFAULTS to database AND store', done => {
 		});
 });
 
-test('should setup set expense action object with data', () => {
-	// this isn't as async test and doesn't require a seperate action handler
-	const action = setExpenses(expenses);
-	expect(action).toEqual({
-		type: 'SET_EXPENSES',
-		expenses
-	});
-});
+// test('should setup set expense action object with data', () => {
+// 	// this isn't as async test and doesn't require a seperate action handler
+// 	const action = setExpenses(expenses);
+// 	expect(action).toEqual({
+// 		type: 'SET_EXPENSES',
+// 		expenses
+// 	});
+// });
 
 test('should fetch the expenses from firebase', done => {
 	const store = createMockStore({});
@@ -133,4 +135,27 @@ test('should fetch the expenses from firebase', done => {
 		});
 		done();
 	});
+});
+
+test('should remove expense from firebase', done => {
+	const store = createMockStore();
+	const id = 1;
+	console.log(id);
+	store
+		.dispatch(startRemoveExpense(id))
+		.then(() => {
+			const actions = store.getActions();
+			console.log(actions);
+			expect(actions[0]).toEqual({
+				type: 'REMOVE_EXPENSE',
+				id
+			});
+
+			return database.ref(`expenses/${actions[0].id}`).once('value');
+		})
+		.then(snapshot => {
+			console.log(snapshot.val());
+			expect(snapshot.val()).toBe(null);
+			done();
+		});
 });
