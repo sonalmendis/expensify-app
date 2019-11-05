@@ -7,7 +7,8 @@ import {
 	editExpense,
 	setExpenses,
 	startSetExpenses,
-	startRemoveExpense
+	startRemoveExpense,
+	startEditExpense
 } from '../../actions/expenses';
 
 import expenses from '../fixtures/expenses';
@@ -36,11 +37,33 @@ test('should setup remove expense action object', () => {
 	//toEqual is used for objects
 });
 
+test('should remove expense from firebase', done => {
+	const store = createMockStore();
+	const id = 1;
+	console.log(id);
+	store
+		.dispatch(startRemoveExpense(id))
+		.then(() => {
+			const actions = store.getActions();
+			console.log(actions);
+			expect(actions[0]).toEqual({
+				type: 'REMOVE_EXPENSE',
+				id
+			});
+
+			return database.ref(`expenses/${actions[0].id}`).once('value');
+		})
+		.then(snapshot => {
+			console.log(snapshot.val());
+			expect(snapshot.val()).toBe(null);
+			done();
+		});
+});
+
 test('should setup edit expense action object', () => {
-	const action = editExpense({
-		id: '123abcd',
-		updates: { description: 'new expenese test', note: 'this is a test note' }
-	});
+	const id = '123abcd';
+	const updates = { description: 'new expenese test', note: 'this is a test note' };
+	const action = editExpense(id, updates);
 	expect(action).toEqual({
 		type: 'EDIT_EXPENSE',
 		id: '123abcd',
@@ -137,25 +160,27 @@ test('should fetch the expenses from firebase', done => {
 	});
 });
 
-test('should remove expense from firebase', done => {
-	const store = createMockStore();
-	const id = 1;
-	console.log(id);
+test('should edit expenses on firebase', done => {
+	const store = createMockStore({});
+	const id = expenses[1].id;
+	const updates = {
+		description: 'Boigerss (news edit)'
+	};
+	console.log(updates);
 	store
-		.dispatch(startRemoveExpense(id))
+		.dispatch(startEditExpense(id, updates))
 		.then(() => {
 			const actions = store.getActions();
-			console.log(actions);
 			expect(actions[0]).toEqual({
-				type: 'REMOVE_EXPENSE',
-				id
+				type: 'EDIT_EXPENSE',
+				id,
+				updates
 			});
-
-			return database.ref(`expenses/${actions[0].id}`).once('value');
+			return database.ref(`expenses/${id}`).once('value'); // return is used to pass it onto the next 'then' chain
 		})
 		.then(snapshot => {
 			console.log(snapshot.val());
-			expect(snapshot.val()).toBe(null);
+			expect(snapshot.val().description).toBe(updates.description);
 			done();
 		});
 });

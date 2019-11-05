@@ -62,11 +62,25 @@ export const startRemoveExpense = id => {
 };
 
 // EDIT EXPENSE ACTION
-export const editExpense = ({ id, updates }) => ({
+export const editExpense = (id, updates) => ({
 	type: 'EDIT_EXPENSE',
 	id,
 	updates
 });
+
+export const startEditExpense = (id, updates) => {
+	console.log(id);
+	console.log(updates);
+	return dispatch => {
+		return database
+			.ref(`expenses/${id}`)
+			.update(updates)
+			.then(() => {
+				console.log(id);
+				console.log(dispatch(editExpense(id, updates)));
+			});
+	};
+};
 
 // SET_EXPENSES
 export const setExpenses = expenses => ({
@@ -92,7 +106,7 @@ export const startSetExpenses = () => {
 					});
 				});
 
-				console.log(expenses);
+				// console.log(expenses);
 
 				// console.log(dispatch(setExpenses(expenses)));
 				// MAKE SURE TO CHECK THAT YOU'RE PASSING IN THE RIGHT FORMAT
@@ -101,7 +115,8 @@ export const startSetExpenses = () => {
 				dispatch(setExpenses({...expenses})) WONT' WORK
 				*/
 
-				console.log(dispatch(setExpenses(expenses)));
+				// console.log(dispatch(setExpenses(expenses)));
+				dispatch(setExpenses(expenses));
 			});
 	};
 };
