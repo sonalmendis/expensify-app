@@ -1,11 +1,29 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { startAddExpense, addExpense, removeExpense, editExpense } from '../../actions/expenses';
+import {
+	startAddExpense,
+	addExpense,
+	removeExpense,
+	editExpense,
+	setExpenses,
+	startSetExpenses
+} from '../../actions/expenses';
 import { testNameToKey } from 'jest-snapshot/build/utils';
 import expenses from '../fixtures/expenses';
 import database from '../../firebase/firebase';
 
 const createMockStore = configureStore([thunk]);
+
+beforeEach(done => {
+	const expensesData = {};
+	expenses.forEach(({ id, description, note, createdAt, amount }) => {
+		expensesData[id] = { description, note, createdAt, amount };
+	});
+	database
+		.ref('expenses')
+		.set(expensesData)
+		.then(() => done());
+});
 
 test('should setup remove expense action object', () => {
 	const action = removeExpense({ id: '123abcd' });
@@ -96,16 +114,23 @@ test('should add expense with DEFAULTS to database AND store', done => {
 		});
 });
 
-// test('should setup add expense action object with DEFAULT values', () => {
-// 	const action = addExpense({});
-// 	expect(action).toEqual({
-// 		type: 'ADD_EXPENSE',
-// 		expense: {
-// 			id: expect.any(String),
-// 			description: '',
-// 			amount: 0,
-// 			createdAt: 0,
-// 			note: ''
-// 		}
-// 	});
-// });
+test('should setup set expense action object with data', () => {
+	// this isn't as async test and doesn't require a seperate action handler
+	const action = setExpenses(expenses);
+	expect(action).toEqual({
+		type: 'SET_EXPENSES',
+		expenses
+	});
+});
+
+test('should fetch the expenses from firebase', done => {
+	const store = createMockStore({});
+	store.dispatch(startSetExpenses()).then(() => {
+		const actions = store.getActions();
+		expect(actions[0]).toEqual({
+			type: 'SET_EXPENSES',
+			expenses
+		});
+		done();
+	});
+});

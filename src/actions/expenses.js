@@ -51,3 +51,41 @@ export const editExpense = ({ id, updates }) => ({
 	id,
 	updates
 });
+
+// SET_EXPENSES
+export const setExpenses = expenses => ({
+	type: 'SET_EXPENSES',
+	expenses
+});
+
+export const startSetExpenses = () => {
+	return dispatch => {
+		return database
+			.ref('expenses')
+			.once('value')
+			.then(snapshot => {
+				// remember to use .val() to actually view the snapshot properly
+				// console.log(snapshot.val());
+				const expenses = [];
+
+				// https://firebase.google.com/docs/reference/js/firebase.database.DataSnapshot
+				snapshot.forEach(childSnapshot => {
+					expenses.push({
+						id: childSnapshot.key, // this is the id that comes from the firebase object
+						...childSnapshot.val() // the rest of the object details, description, amount etc.
+					});
+				});
+
+				console.log(expenses);
+
+				// console.log(dispatch(setExpenses(expenses)));
+				// MAKE SURE TO CHECK THAT YOU'RE PASSING IN THE RIGHT FORMAT
+				// WHETHER ITS AN ARRAY OR OBJECT
+				/*
+				dispatch(setExpenses({...expenses})) WONT' WORK
+				*/
+
+				console.log(dispatch(setExpenses(expenses)));
+			});
+	};
+};
