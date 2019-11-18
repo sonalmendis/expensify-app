@@ -13,8 +13,9 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const database = firebase.database();
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
-export {firebase,database as default}; // exports firebase in a way that can be used in any file
+export {firebase, googleAuthProvider, database as default}; // exports firebase in a way that can be used in any file
 
 /***
  * EXAMPLES OF SUBSCRIBERS
