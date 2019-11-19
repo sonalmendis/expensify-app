@@ -21,12 +21,13 @@ export const addExpense = expense => ({
 
 export const startAddExpense = (expenseData = {}) => {
 	// returning a function like below usually wouldn't work without redux-thunk
-	return dispatch => {
+	return (dispatch, getState) => {
+		const uid = getState().auth.uid;
 		// setting up the defaults below:
 		const { description = '', note = '', amount = 0, createdAt = 0 } = expenseData;
 		const expense = { description, note, amount, createdAt };
 		return database
-			.ref('expenses')
+			.ref(`users/${uid}/expenses`)
 			.push(expense)
 			.then(ref => {
 				dispatch(
@@ -46,10 +47,11 @@ export const removeExpense = ({ id } = {}) => ({
 });
 
 export const startRemoveExpense = id => {
-	return dispatch => {
+	return (dispatch, getState) => {
+		const uid = getState().auth.uid;
 		console.log(id);
 		return database
-			.ref(`expenses/${id}`)
+			.ref(`users/${uid}/expenses/${id}`)
 			.remove()
 			.then(() => {
 				dispatch(
@@ -71,9 +73,10 @@ export const editExpense = (id, updates) => ({
 export const startEditExpense = (id, updates) => {
 	console.log(id);
 	console.log(updates);
-	return dispatch => {
+	return (dispatch, getState) => {
+		const uid = getState().auth.uid;
 		return database
-			.ref(`expenses/${id}`)
+			.ref(`users/${uid}/expenses/${id}`)
 			.update(updates)
 			.then(() => {
 				console.log(id);
@@ -89,9 +92,10 @@ export const setExpenses = expenses => ({
 });
 
 export const startSetExpenses = () => {
-	return dispatch => {
+	return (dispatch, getState) => {
+		const uid = getState().auth.uid;
 		return database
-			.ref('expenses')
+			.ref(`users/${uid}/expenses`)
 			.once('value')
 			.then(snapshot => {
 				// remember to use .val() to actually view the snapshot properly
