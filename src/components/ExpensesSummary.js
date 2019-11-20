@@ -1,27 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import selectExpenses from '../selectors/expenses';
 import selectExpensesTotal from '../selectors/expensesTotals';
 import numeral from 'numeral';
+
 export const ExpensesSummary = props => {
-	if (props.expenses.length === 0) {
-		return (
-			<div>
-				<p>No expenses to currently show</p>
+	const numberOfExpenses = props.expenses.length;
+	const expensesTotalAmount = numeral(props.expensesTotal / 100).format('$0,0.00');
+	const expenseWordPlural = numberOfExpenses === 1 ? 'expense' : 'expenses';
+	return (
+		<div className="page-header">
+			<div className="content-container">
+				<h1 className="page-header__title">
+					You have <span>{numberOfExpenses}</span> {expenseWordPlural} totalling <span>{expensesTotalAmount}</span>
+				</h1>
+				<div className="page-header__actions">
+					<Link className="button" to="/create">
+						Add Expense
+					</Link>
+				</div>
 			</div>
-		);
-	} else {
-		const numberOfExpenses = props.expenses.length;
-		const expensesTotalAmount = numeral(props.expensesTotal / 100).format('$0,0.00');
-		const expenseWordPlural = numberOfExpenses === 1 ? 'expense' : 'expenses';
-		return (
-			<div>
-				<p>
-					You have {numberOfExpenses} {expenseWordPlural} totalling {expensesTotalAmount}
-				</p>
-			</div>
-		);
-	}
+		</div>
+	);
 };
 
 const mapStateToProps = state => {

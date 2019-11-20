@@ -32,41 +32,56 @@ it's not explicitly passed down by us but by the 'connect' component
 	};
 	render() {
 		return (
-			<div>
-				{/* Text filter */}
-				<input type="text" value={this.props.filters.text} onChange={this.onTextChange} />
-				{/*
-				The 'onChange' attribute above is needed to define the input readability type because we constantly 
-				change the value of the input (try removing it and typing inside the input to see the effect)
-			*/}
-				{/* Filter Type */}
-				<select
-					value={this.props.filters.sortBy}
-					/****
-				 * Why do we add the value attribute?
-				 * If you don't add it, you end up with that's called an uncontrolled component:
-					https://reactjs.org/docs/uncontrolled-components.html
-					Basically the DOM becomes the source of truth rather than React which is not what we want.
-					This way the default value is controlled by React.
-				 */
-					onChange={this.onSortChange}
-				>
-					<option value="date">Date</option>
-					<option value="amount">Amount</option>
-				</select>
-				{/* Date Picker */}
-				<DateRangePicker
-					startDate={this.props.filters.startDate} // momentPropTypes.momentObj or null,
-					startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
-					endDate={this.props.filters.endDate} // momentPropTypes.momentObj or null,
-					endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-					onDatesChange={this.onDatesChange} // PropTypes.func.isRequired,
-					focusedInput={this.state.calendarFocused} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-					onFocusChange={this.onFocusChange} // PropTypes.func.isRequired,
-					numberOfMonths={1}
-					isOutsideRange={() => false}
-					showClearDates={true}
-				/>
+			<div className="content-container">
+				<div className="input-group">
+					<div className="input-group__item">
+						{/* Text filter */}
+						<input
+							className="text-input"
+							placeholder="Search Expenses"
+							type="text"
+							value={this.props.filters.text}
+							onChange={this.onTextChange}
+						/>
+						{/* 
+						The 'onChange' attribute above is needed to define the input readability type because we constantly 
+						change the value of the input (try removing it and typing inside the input to see the effect)
+						*/}
+					</div>
+					<div className="input-group__item">
+						{/* Select Filter Type */}
+						<select
+							className="select"
+							value={this.props.filters.sortBy}
+							/****
+							* Why do we add the value attribute?
+							* If you don't add it, you end up with that's called an uncontrolled component:
+								https://reactjs.org/docs/uncontrolled-components.html
+								Basically the DOM becomes the source of truth rather than React which is not what we want.
+								This way the default value is controlled by React.
+							*/
+							onChange={this.onSortChange}
+						>
+							<option value="date">Date</option>
+							<option value="amount">Amount</option>
+						</select>
+					</div>
+					<div className="input-group__item">
+						{/* Date Picker */}
+						<DateRangePicker
+							startDate={this.props.filters.startDate} // momentPropTypes.momentObj or null,
+							startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
+							endDate={this.props.filters.endDate} // momentPropTypes.momentObj or null,
+							endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+							onDatesChange={this.onDatesChange} // PropTypes.func.isRequired,
+							focusedInput={this.state.calendarFocused} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+							onFocusChange={this.onFocusChange} // PropTypes.func.isRequired,
+							numberOfMonths={1}
+							isOutsideRange={() => false}
+							showClearDates={true}
+						/>
+					</div>
+				</div>
 			</div>
 		);
 	}
@@ -85,7 +100,4 @@ const mapDispatchToProps = dispatch => ({
 	setStartDate: startDate => dispatch(setStartDate(startDate)),
 	setEndDate: endDate => dispatch(setEndDate(endDate))
 });
-export default connect(
-	mapStatetoProps,
-	mapDispatchToProps
-)(ExpenseListFilters);
+export default connect(mapStatetoProps, mapDispatchToProps)(ExpenseListFilters);

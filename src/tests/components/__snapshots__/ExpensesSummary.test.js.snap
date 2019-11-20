@@ -1,35 +1,106 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should count multiple expenses and add up correct total 1`] = `
-<div>
-  <p>
-    You have 
-    3
-     
-    expenses
-     totalling 
-    $255.00
-  </p>
+<div
+  className="page-header"
+>
+  <div
+    className="content-container"
+  >
+    <h1
+      className="page-header__title"
+    >
+      You have 
+      <span>
+        3
+      </span>
+       
+      expenses
+       totalling 
+      <span>
+        $255.00
+      </span>
+    </h1>
+    <div
+      className="page-header__actions"
+    >
+      <Link
+        className="button"
+        to="/create"
+      >
+        Add Expense
+      </Link>
+    </div>
+  </div>
 </div>
 `;
 
 exports[`should count single expense and show total 1`] = `
-<div>
-  <p>
-    You have 
-    1
-     
-    expense
-     totalling 
-    $5.00
-  </p>
+<div
+  className="page-header"
+>
+  <div
+    className="content-container"
+  >
+    <h1
+      className="page-header__title"
+    >
+      You have 
+      <span>
+        1
+      </span>
+       
+      expense
+       totalling 
+      <span>
+        $5.00
+      </span>
+    </h1>
+    <div
+      className="page-header__actions"
+    >
+      <Link
+        className="button"
+        to="/create"
+      >
+        Add Expense
+      </Link>
+    </div>
+  </div>
 </div>
 `;
 
 exports[`should render expenses summary component correctly without any expenses 1`] = `
-<div>
-  <p>
-    No expenses to currently show
-  </p>
+<div
+  className="page-header"
+>
+  <div
+    className="content-container"
+  >
+    <h1
+      className="page-header__title"
+    >
+      You have 
+      <span>
+        0
+      </span>
+       
+      expenses
+       totalling 
+      <span>
+        $0.00
+      </span>
+    </h1>
+    <div
+      className="page-header__actions"
+    >
+      <Link
+        className="button"
+        to="/create"
+      >
+        Add Expense
+      </Link>
+    </div>
+  </div>
 </div>
 `;

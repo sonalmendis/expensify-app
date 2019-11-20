@@ -13,14 +13,22 @@ export class AddExpensePage extends React.Component {
 	render() {
 		return (
 			<div>
-				<h1>Add Expense</h1>
-				<ExpenseForm
-					/* this prop gets sent to the expense form essentialy so the components can communicate in their 
-				relevant contexts e.g in this case to add an expense (not to edit it)
-				CHECK THE RELEVNT BOOKMARK ON UDEMY FOR INFO
-			*/
-					onSubmit={this.onSubmit}
-				/>
+				<div className="page-header">
+					<div className="content-container">
+						<h1 className="page-header__title">Add Expense</h1>
+					</div>
+				</div>
+
+				<div className="content-container">
+					<ExpenseForm
+						/* this prop gets sent to the expense form essentialy so the components can communicate in their 
+						relevant contexts e.g in this case to add an expense (not to edit it)
+						CHECK THE RELEVNT BOOKMARK ON UDEMY FOR INFO
+						*/
+						onSubmit={this.onSubmit}
+						buttonCopy={'Add Expense'}
+					/>
+				</div>
 			</div>
 		);
 	}

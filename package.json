@@ -13,6 +13,7 @@
 		"heroku-postbuild": "yarn run build:prod"
 	},
 	"dependencies": {
+		"@babel/polyfill": "^7.7.0",
 		"@babel/preset-react": "^7.7.0",
 		"babel-cli": "6.26.0",
 		"babel-loader": "^8.0.4",
